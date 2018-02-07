@@ -264,18 +264,6 @@ public class XMLUtility {
         }
     }
 
-    /**
-     * Prints the document for debug.
-     *
-     * @param model the model to be printed
-     * @throws Exception for any errors encountered
-     */
-    public static void printModel(Object model) throws Exception {
-        JAXBContext jaxbContext = JAXBContext.newInstance("gov.medicaid.domain.model");
-        Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.marshal(model, System.out);
-    }
 
     /**
      * Null safe get for the individual applicant.
