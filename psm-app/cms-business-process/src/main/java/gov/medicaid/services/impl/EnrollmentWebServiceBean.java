@@ -18,7 +18,6 @@ package gov.medicaid.services.impl;
 
 import gov.medicaid.binders.BinderUtils;
 import gov.medicaid.domain.model.EnrollmentType;
-import gov.medicaid.domain.model.GetProfileDetailsRequest;
 import gov.medicaid.domain.model.GetProfileDetailsResponse;
 import gov.medicaid.domain.model.ResubmitTicketRequest;
 import gov.medicaid.domain.model.ResubmitTicketResponse;
@@ -252,14 +251,25 @@ public class EnrollmentWebServiceBean extends BaseService implements EnrollmentW
     /**
      * Retrieves the profile details.
      *
-     * @param request the service request
+     * @param username  the username of the requesting user
+     * @param systemId  the system that authenticated the requesting user
+     * @param npi       the NPI for which this user is a proxy, if any
+     * @param profileId the ID of the enrollment (profile) to look up
      * @return the service response
      * @throws PortalServiceException for any errors encountered
      */
-    public GetProfileDetailsResponse getProfile(GetProfileDetailsRequest request) throws PortalServiceException {
+    public GetProfileDetailsResponse getProfile(
+            String username,
+            String systemId,
+            String npi,
+            long profileId
+    ) throws PortalServiceException {
         GetProfileDetailsResponse response = new GetProfileDetailsResponse();
-        CMSUser user = findUser(request.getUsername(), request.getSystemId(), request.getNpi());
-        ProviderProfile profile = providerEnrollmentService.getProviderDetails(user, request.getProfileId());
+        CMSUser user = findUser(username, systemId, npi);
+        ProviderProfile profile = providerEnrollmentService.getProviderDetails(
+                user,
+                profileId
+        );
         Enrollment wrapper = new Enrollment();
         wrapper.setDetails(profile);
         response.setEnrollment(XMLAdapter.toXML(wrapper));
