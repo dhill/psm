@@ -299,4 +299,9 @@
         parent="BaseSystemAdminController">
     <property name="userValidator" ref="UserValidator"/>
   </bean>
+
+  <bean id="PsmApiServlet"
+        class="gov.medicaid.api.PsmApiServlet">
+    <property name="providerEnrollmentService" ref="ProviderEnrollmentService"/>
+  </bean>
 </beans>
