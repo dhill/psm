@@ -18,7 +18,6 @@ package gov.medicaid.services.impl;
 
 import gov.medicaid.binders.BinderUtils;
 import gov.medicaid.domain.model.EnrollmentType;
-import gov.medicaid.domain.model.GetProfileDetailsResponse;
 import gov.medicaid.domain.model.ResubmitTicketRequest;
 import gov.medicaid.domain.model.ResubmitTicketResponse;
 import gov.medicaid.domain.model.SubmitTicketRequest;
@@ -255,16 +254,15 @@ public class EnrollmentWebServiceBean extends BaseService implements EnrollmentW
      * @param systemId  the system that authenticated the requesting user
      * @param npi       the NPI for which this user is a proxy, if any
      * @param profileId the ID of the enrollment (profile) to look up
-     * @return the service response
+     * @return the enrollment (profile) found
      * @throws PortalServiceException for any errors encountered
      */
-    public GetProfileDetailsResponse getProfile(
+    public EnrollmentType getProfile(
             String username,
             String systemId,
             String npi,
             long profileId
     ) throws PortalServiceException {
-        GetProfileDetailsResponse response = new GetProfileDetailsResponse();
         CMSUser user = findUser(username, systemId, npi);
         ProviderProfile profile = providerEnrollmentService.getProviderDetails(
                 user,
@@ -272,8 +270,7 @@ public class EnrollmentWebServiceBean extends BaseService implements EnrollmentW
         );
         Enrollment wrapper = new Enrollment();
         wrapper.setDetails(profile);
-        response.setEnrollment(XMLAdapter.toXML(wrapper));
-        return response;
+        return XMLAdapter.toXML(wrapper);
     }
 
     @Override
