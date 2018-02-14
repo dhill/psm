@@ -17,29 +17,49 @@ public class EnrollmentStepDefinitions {
     private EnrollmentPage enrollmentPage;
     private OwnershipInfoPage ownershipInfoPage;
 
-    @Given("^I am entering ownership information$")
-    public void i_am_entering_ownership_information() {
+    @When("^I move to the individual member info page$")
+    public void i_move_to_the_individual_member_info_page() {
         enrollmentSteps.selectOrganizationalProviderType();
         enrollmentSteps.enterOrganizationInfo();
         enrollmentSteps.enterContactInfo();
         enrollmentPage.clickNext();
+    }
+
+    @When("^I open an individual member panel")
+    public void i_open_an_individual_member_panel() {
+        enrollmentSteps.openIndividualMemberPanel();
+    }
+
+    @When("^I move to the ownership info page$")
+    public void i_move_to_the_ownership_info_page() {
+        i_move_to_the_individual_member_info_page();
         enrollmentSteps.enterIndividualMember();
         enrollmentPage.clickNext();
+    }
 
-        ownershipInfoPage.selectEntityType("Sole Proprietorship");
-        ownershipInfoPage.addOwnership();
-        ownershipInfoPage.selectOwnershipType("Managing Employee");
-        ownershipInfoPage.setOwnershipFirstName("First");
-        ownershipInfoPage.setOwnershipMiddleName("Middle");
-        ownershipInfoPage.setOwnershipLastName("Last");
-        ownershipInfoPage.setOwnershipSoSec("123456789");
-        ownershipInfoPage.setOwnershipAddr1("OwnerAddr1");
-        ownershipInfoPage.setOwnershipDOB("01011970");
-        ownershipInfoPage.setOwnershipHireDate("01012000");
-        ownershipInfoPage.setOwnershipCity("Ownertown");
-        ownershipInfoPage.selectOwnershipState("Texas");
-        ownershipInfoPage.setOwnershipZip("77706");
-        ownershipInfoPage.selectOwnershipCounty("Beltrami");
+    @When("^I open individual and business owner panels$")
+    public void i_open_individual_and_business_owner_panels() {
+        ownershipInfoPage.addIndividualOwnership();
+        ownershipInfoPage.addBusinessOwnership();
+    }
+
+    @When("^I move to the summary page$")
+    public void i_move_to_the_summary_page() {
+        i_move_to_the_ownership_info_page();
+        enrollmentSteps.enterOrganizationOwnershipInfo();
+        ownershipInfoPage.clickNext();
+    }
+
+    @When("^I move to the provider statement page$")
+    public void i_move_to_the_provider_statement_page() {
+        i_move_to_the_summary_page();
+        enrollmentPage.clickNext();
+    }
+
+    @When("^I am entering ownership information$")
+    public void i_am_entering_ownership_information() {
+        i_move_to_the_ownership_info_page();
+        enrollmentSteps.enterOrganizationOwnershipInfo();
     }
 
     @Given("^I have indicated that the owner has an interest in another Medicaid disclosing entity$")
@@ -62,7 +82,6 @@ public class EnrollmentStepDefinitions {
     public void i_click_next_on_the_Ownership_Info_Page() {
         ownershipInfoPage.setNoToAllDisclosures();
         ownershipInfoPage.clickNext();
-
     }
 
     @Then("^the city should be accepted$")

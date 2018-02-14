@@ -5,6 +5,7 @@ import gov.medicaid.features.enrollment.ui.IndividualInfoPage;
 import gov.medicaid.features.enrollment.ui.IndividualSummaryPage;
 import gov.medicaid.features.enrollment.ui.LicenseInfoPage;
 import gov.medicaid.features.enrollment.ui.OrganizationInfoPage;
+import gov.medicaid.features.enrollment.ui.OwnershipInfoPage;
 import gov.medicaid.features.enrollment.ui.PersonalInfoPage;
 import gov.medicaid.features.enrollment.ui.PracticeInfoPage;
 import gov.medicaid.features.enrollment.ui.ProviderStatementPage;
@@ -65,6 +66,7 @@ public class EnrollmentSteps {
     private PersonalInfoPage personalInfoPage;
     private LicenseInfoPage licenseInfoPage;
     private PracticeInfoPage practiceInfoPage;
+    private OwnershipInfoPage ownershipInfoPage;
     private IndividualSummaryPage individualSummaryPage;
     private ProviderStatementPage providerStatementPage;
     private EnrollmentDetailsPage enrollmentDetailsPage;
@@ -130,6 +132,10 @@ public class EnrollmentSteps {
         return dateStr;
     }
 
+    public void openIndividualMemberPanel() {
+        individualInfoPage.enterIndividualMember();
+    }
+
     public void enterIndividualMember() {
         individualInfoPage.enterIndividualMember();
         individualInfoPage.setIndividualOwnerNPI("1234567893");
@@ -190,6 +196,24 @@ public class EnrollmentSteps {
         practiceInfoPage.enterFiscalYearEnd(PRACTICE_YEAR_END);
         practiceInfoPage.checkYesEftAccepted();
         practiceInfoPage.checkFirstRemittanceSequence();
+    }
+
+    @Step
+    public void enterOrganizationOwnershipInfo() {
+        ownershipInfoPage.selectEntityType("Sole Proprietorship");
+        ownershipInfoPage.addIndividualOwnership();
+        ownershipInfoPage.selectOwnershipType("Managing Employee");
+        ownershipInfoPage.setOwnershipFirstName("First");
+        ownershipInfoPage.setOwnershipMiddleName("Middle");
+        ownershipInfoPage.setOwnershipLastName("Last");
+        ownershipInfoPage.setOwnershipSoSec("123456789");
+        ownershipInfoPage.setOwnershipAddr1("OwnerAddr1");
+        ownershipInfoPage.setOwnershipDOB("01011970");
+        ownershipInfoPage.setOwnershipHireDate("01012000");
+        ownershipInfoPage.setOwnershipCity("Ownertown");
+        ownershipInfoPage.selectOwnershipState("Texas");
+        ownershipInfoPage.setOwnershipZip("77706");
+        ownershipInfoPage.selectOwnershipCounty("Beltrami");
     }
 
     @Step
