@@ -6,8 +6,6 @@ Feature: Organization Enrollment Steps Accessibility Checks
     Given I have started an enrollment
     Then I should have no accessibility issues
 
-  # fails with color contrast issue
-  @ignore
   Scenario: 1. Organization Info Page
     Given I have started an enrollment
     When I move to the organization page
